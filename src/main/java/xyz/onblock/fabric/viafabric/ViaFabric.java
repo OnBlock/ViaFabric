@@ -24,25 +24,24 @@
 
 package xyz.onblock.fabric.viafabric;
 
-import xyz.onblock.fabric.viafabric.commands.VRCommandHandler;
-import xyz.onblock.fabric.viafabric.platform.VRInjector;
-import xyz.onblock.fabric.viafabric.platform.VRLoader;
-import xyz.onblock.fabric.viafabric.platform.VRPlatform;
-import xyz.onblock.fabric.viafabric.util.JLoggerToLog4j;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import io.netty.channel.DefaultEventLoop;
 import io.netty.channel.EventLoop;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.registry.CommandRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.CommandSource;
-import net.minecraft.server.command.ServerCommandSource;
 import org.apache.logging.log4j.LogManager;
 import us.myles.ViaVersion.ViaManager;
 import us.myles.ViaVersion.api.Via;
+import xyz.onblock.fabric.viafabric.commands.VRCommandHandler;
+import xyz.onblock.fabric.viafabric.platform.VRInjector;
+import xyz.onblock.fabric.viafabric.platform.VRLoader;
+import xyz.onblock.fabric.viafabric.platform.VRPlatform;
+import xyz.onblock.fabric.viafabric.util.JLoggerToLog4j;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -53,7 +52,6 @@ public class ViaFabric implements ModInitializer {
     public static final Logger JLOGGER = new JLoggerToLog4j(LogManager.getLogger("ViaFabric"));
     public static final ExecutorService ASYNC_EXECUTOR;
     public static final EventLoop EVENT_LOOP;
-    public static CommandDispatcher<ServerCommandSource> dispatcher;
 
     static {
         ThreadFactory factory = new ThreadFactoryBuilder().setNameFormat("ViaFabric-%d").build();
@@ -88,8 +86,10 @@ public class ViaFabric implements ModInitializer {
 
         FabricLoader.getInstance().getEntrypoints("viafabric:via_api_initialized", Runnable.class).forEach(Runnable::run);
 
-        dispatcher.register(command("viaversion"));
-        dispatcher.register(command("viaver"));
-        dispatcher.register(command("vvfabric"));
+        CommandRegistry.INSTANCE.register(false, dispatcher -> {
+            dispatcher.register(command("viaversion"));
+            dispatcher.register(command("viaver"));
+            dispatcher.register(command("vvfabric"));
+        });
     }
 }

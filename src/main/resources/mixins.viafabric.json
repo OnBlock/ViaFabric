@@ -4,8 +4,7 @@
   "package": "xyz.onblock.fabric.viafabric.mixin",
   "mixins": [
     "MixinServerNetworkIoChInit",
-    "MixinClientConnection",
-    "MixinCommandManager"
+    "MixinClientConnection"
   ],
   "client": [
   ],
