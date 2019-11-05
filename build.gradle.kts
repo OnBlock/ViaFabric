@@ -46,13 +46,13 @@ tasks.named<ProcessResources>("processResources") {
 
 dependencies {
     // transitive = false because Guava is conflicting on runClient
-    compile("us.myles:viaversion:2.1.4-19w42a") { isTransitive = false }
-    include("us.myles:viaversion:2.1.4-19w42a")
+    compile("us.myles:viaversion:2.1.4-19w44a") { isTransitive = false }
+    include("us.myles:viaversion:2.1.4-19w44a")
 
     compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 
-    minecraft("com.mojang:minecraft:19w42a")
-    mappings("net.fabricmc:yarn:19w42a+build.1")
+    minecraft("com.mojang:minecraft:19w44a")
+    mappings("net.fabricmc:yarn:19w44a+build.7")
     modCompile("net.fabricmc:fabric-loader:0.6.3+build.167")
 
     modCompile("net.fabricmc.fabric-api:fabric-api:0.4.8+build.255-1.15")
